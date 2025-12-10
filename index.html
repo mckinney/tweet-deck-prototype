@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trends</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .trend {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .trend h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .trend p {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="trends">
+        Loading...
+    </div>
+
+    <script>
+        console.log('Starting to fetch trends...');
+        
+        fetch('data/trends_data.json')
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text(); // Get as text first
+            })
+            .then(text => {
+                console.log('Received text, length:', text.length);
+                console.log('First 100 chars:', text.substring(0, 100));
+                return JSON.parse(text); // Parse manually to see errors
+            })
+            .then(data => {
+                console.log('Parsed JSON successfully, records:', data.length);
+                const container = document.getElementById('trends');
+                container.innerHTML = '';
+                
+                data.forEach((trend, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'trend';
+                    div.innerHTML = `
+                        <h3>${trend.name || 'No name'}</h3>
+                        <p><strong>Type:</strong> ${trend.type || 'No type'}</p>
+                        <p>${trend.trend_description || 'No description'}</p>
+                    `;
+                    container.appendChild(div);
+                });
+                
+                console.log('Finished rendering trends');
+            })
+            .catch(error => {
+                console.error('Error details:', error);
+                document.getElementById('trends').innerHTML = `Error loading data: ${error.message}`;
+            });
+    </script>
+</body>
+</html>
