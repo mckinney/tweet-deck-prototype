@@ -1,273 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Trend Command Center</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-		rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trend Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-	<style>
-		body {
-			background: #101729;
-			color: #fff;
-			font-family: "Inter", sans-serif;
-			margin: 0;
-		}
+<style>
+body {
+  background: #fff;
+  color: #231f20;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+header {
+  border-bottom: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 10px 20px;
+  flex-shrink: 0;
+}
+.app-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 300px;
+}
+h1, h2 { margin: 0; color: #b61214; }
+h1 { font-weight: 600; }
+h2 { font-weight: 500; }
+main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+nav {
+  box-sizing: border-box;
+  border-right: 2px solid #ccc;
+  color: #231f20;
+  font-size: 14px;
+  padding: 20px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.container {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.container::-webkit-scrollbar {
+  display: none;
+}
+.nav-title {
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 5px; margin: 5px 0; }
+.active { background-color: #e0dcd3; border-radius: 5px; }
+.live-feed {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 20px 40px;
+  max-width: 600px;
+}
+.live-feed h3 { flex-shrink: 0; }
+#types-count {
+  background-color: #520c00;
+  border-radius: 5px;
+  color: #f2f0e9;
+  padding: 15px 15px 5px;
+  width: 250px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+#types-count p { margin: 0 0 10px; }
+.type-label { display: flex; justify-content: space-between; width: 100%; }
+h3 { font-size: 14px; font-weight: 400; letter-spacing: 0.5px; margin: 0 0 20px; text-transform: uppercase; }
+.trend {
+  display: flex;
+  gap: 15px;
+  background: #fff5e6;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  align-items: flex-start;
+}
 
-		header {
-			border-bottom: 2px solid #202A3A;
-			display: flex;
-			align-items: center;
-			height: 50px;
-			padding: 10px 20px;
-		}
+.trend img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  flex-shrink: 0;
+  padding-top: 35px;
+}
 
-		.app-title {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-			width: 300px;
-		}
-
-		h1,
-		h2 {
-			margin: 0;
-		}
-
-		h1 {
-			font-weight: 600;
-		}
-
-		h2 {
-			font-weight: 500;
-		}
-
-		main {
-			display: flex;
-		}
-
-		nav {
-			box-sizing: border-box;
-			border-right: 2px solid #202A3A;
-			color: #7D828D;
-			font-size: 14px;
-			padding: 20px;
-			width: 300px;
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-		}
-
-		.nav-title {
-			letter-spacing: 0.5px;
-			text-transform: uppercase;
-			margin-top: 0;
-		}
-
-		.nav-item {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-			padding: 5px;
-			margin: 5px 0;
-		}
-
-		.nav-item p {
-			margin: 0;
-		}
-
-		.active {
-			background-color: #151E3B;
-			border-radius: 5px;
-		}
-
-		.live-feed {
-			max-width: 600px;
-			margin: 20px 40px;
-		}
-
-		.counter {
-			margin: 20px 40px;
-		}
-
-		#types-count {
-			background-color: #202A3A;
-			border-radius: 5px;
-			color: #7D828D;
-			padding: 15px 15px 5px;
-			width: 250px;
-		}
-
-		#types-count p {
-			margin: 0 0 10px;
-		}
-
-		.type-label {
-			display: flex;
-			justify-content: space-between;
-			width: 100%;
-		}
-
-		h3 {
-			color: #7D828D;
-			font-size: 14px;
-			font-weight: 400;
-			letter-spacing: 0.5px;
-			margin: 0 0 20px;
-			text-transform: uppercase;
-		}
-
-		.trend {
-			background: #2F2C80;
-			border-radius: 5px;
-			padding: 15px;
-			margin-bottom: 10px;
-		}
-
-		.trend-name {
-			font-weight: 700;
-			margin: 0 0 10px 0;
-		}
-
-		.description {
-			margin: 0;
-		}
-
-		.type {
-			background-color: #615FF8;
-			border-radius: 5px;
-			color: white;
-			margin: 10px 0 0;
-			padding: 2px 10px;
-			width: max-content;
-		}
-	</style>
+.trend-content {
+  display: flex;
+  flex-direction: column;
+}
+.trend-name { font-weight: 700; margin: 0 0 10px 0; }
+.description { margin: 0; }
+.type {
+  background-color: #520c00;
+  border-radius: 5px;
+  color: #f2f0e9;
+  margin: 10px 0 0;
+  padding: 2px 10px;
+  width: max-content;
+}
+button {
+  font-family: "Inter", sans-serif;
+}
+</style>
 </head>
 
 <body>
-	<header>
-		<div class="app-title">
-			<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#52A07F"
-				stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<polyline points="4,12 8,8 12,16 16,12 20,8" />
-			</svg>
-			<h1>Social Radar</h1>
-		</div>
-		<h2>Trend Command Center</h2>
-	</header>
+<header>
+  <div class="app-title">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#ff2301" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="4,12 8,8 12,16 16,12 20,8" />
+    </svg>
+    <h1>Social Radar</h1>
+  </div>
+  <h2>Trend Command Center</h2>
+</header>
 
-	<main>
-		<nav>
-			<div class="nav-section">
-				<p class="nav-title">Main</p>
-				<div class="nav-item">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"
-						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<main>
+  <nav>
+    <div class="nav-section">
+      <p class="nav-title">Main</p>
+      <div class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"
+						stroke="#ff2301" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<rect x="3.33" y="3.33" width="5" height="5" />
 						<rect x="11.67" y="3.33" width="5" height="5" />
 						<rect x="3.33" y="11.67" width="5" height="5" />
 						<rect x="11.67" y="11.67" width="5" height="5" />
 					</svg>
-					<p>Dashboard</p>
-				</div>
-				<div class="nav-item active">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <p>Dashboard</p>
+      </div>
+      <div class="nav-item active">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+						stroke="#ff2301" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="4,12 8,8 12,16 16,12 20,8" />
 					</svg>
-					<p>Live Feed</p>
-				</div>
-			</div>
-
-			<div class="nav-section">
-				<p class="nav-title">System</p>
-				<div class="nav-item">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <p>Live Feed</p>
+      </div>
+    </div>
+    <div class="nav-section">
+      <p class="nav-title">System</p>
+      <div class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+						stroke="#ff2301" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<circle cx="12" cy="12" r="3" />
 						<path
 							d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
 					</svg>
-					<p>Configuration</p>
-				</div>
-			</div>
-		</nav>
+        <p>Configuration</p>
+      </div>
+    </div>
+  </nav>
 
-		<div class="live-feed">
-			<h3>Live Feed</h3>
-			<div class="container" id="trends">
-				Loading...
-			</div>
-		</div>
+  <div class="live-feed">
+    <h3>Live Feed</h3>
+    <div class="container" id="trends">Loading...</div>
+  </div>
 
-		<div class="counter">
-			<h3>Top Types</h3>
-			<div id="types-count">
-				Loading...
-			</div>
-		</div>
-	</main>
+  <div class="live-feed">
+    <h3>Top Types</h3>
+    <div id="types-count">Loading...</div>
+  </div>
+</main>
 
-	<script>
-		console.log('Starting to fetch trends...');
+<script>
+let allTrends = [];
+let currentIndex = 0;
+const totalTrends = 991;
+const totalTimeMinutes = 30;
+const batchInterval = (totalTimeMinutes * 60 * 1000) / totalTrends;
+let typeCounts = {};
 
-		fetch('data/trends_data.json')
-			.then(response => {
-				console.log('Response status:', response.status);
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
-				}
-				return response.text(); // Get as text first
-			})
-			.then(text => {
-				console.log('Received text, length:', text.length);
-				console.log('First 100 chars:', text.substring(0, 100));
-				return JSON.parse(text); // Parse manually to see errors
-			})
-			.then(data => {
-				console.log('Parsed JSON successfully, records:', data.length);
-				const container = document.getElementById('trends');
-				container.innerHTML = '';
+const container = document.getElementById('trends');
+const liveFeedHeader = document.querySelector('.live-feed h3');
 
-				const typeCounts = {};
+const scrollBtn = document.createElement('button');
+scrollBtn.textContent = 'Scroll to Bottom';
+scrollBtn.style.position = 'fixed';
+scrollBtn.style.bottom = '20px';
+scrollBtn.style.right = '20px';
+scrollBtn.style.padding = '10px 15px';
+scrollBtn.style.background = '#520c00';
+scrollBtn.style.color = '#f2f0e9';
+scrollBtn.style.border = 'none';
+scrollBtn.style.borderRadius = '5px';
+scrollBtn.style.cursor = 'pointer';
+scrollBtn.style.display = 'block';
+document.body.appendChild(scrollBtn);
 
-				data.forEach((trend, index) => {
-					const type = trend.type || 'No type';
-					typeCounts[type] = (typeCounts[type] || 0) + 1;
+let autoScroll = true;
+let userScrolled = false;
 
-					const div = document.createElement('div');
-					div.className = 'trend';
-					div.innerHTML = `
-						<p class="trend-name">${trend.name || 'No name'}</p>
-						<p class="description">${trend.trend_description || 'No description'}</p>
-						<p class="type">${trend.type || 'No type'}</p>
-					`;
-					container.appendChild(div);
-				});
+container.addEventListener('scroll', () => {
+  const atBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 5;
+  if (!atBottom) {
+    userScrolled = true;
+    autoScroll = false;
+  } else if (atBottom && userScrolled) {
+    userScrolled = false;
+    autoScroll = true;
+  }
+});
 
-				console.log('Finished rendering trends');
+scrollBtn.addEventListener('click', () => {
+  container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+  userScrolled = false;
+  autoScroll = true;
+  scrollBtn.style.display = 'none';
+});
 
-				const sortedTypes = Object.entries(typeCounts)
-					.sort(([, a], [, b]) => b - a)
-					.slice(0, 20);
+fetch('data/trends_data.json')
+  .then(r => r.json())
+  .then(data => {
+    allTrends = data;
+    container.innerHTML = '';
+    startLiveFeed();
+  })
+  .catch(err => {
+    container.innerHTML = `Error loading data: ${err.message}`;
+  });
 
-				console.log('Trend counts by type (sorted):', sortedTypes);
+function startLiveFeed() {
+  function addNextTrend() {
+    if (currentIndex >= allTrends.length) return;
 
-				const typesCount = document.getElementById('types-count');
-				typesCount.innerHTML = sortedTypes
-					.map(([type, count]) => `<p class="type-label"><span>${type}</span><span>${count}</span></p>`)
-					.join('');
-			})
-			.catch(error => {
-				console.error('Error details:', error);
-				document.getElementById('trends').innerHTML = `Error loading data: ${error.message}`;
-			});
-	</script>
+    const trend = allTrends[currentIndex];
+    const div = document.createElement('div');
+    div.className = 'trend';
+    div.style.opacity = '0';
+    div.style.transition = 'opacity 0.3s';
+    div.innerHTML = `
+      <img src="data/${trend.trend_image || 'https://via.placeholder.com/80'}" alt="${trend.name || 'Trend Image'}">
+      <div class="trend-content">
+        <p class="trend-name">${trend.name || 'No name'}</p>
+        <p class="description">${trend.trend_description || 'No description'}</p>
+        <p class="type">${trend.type || 'No type'}</p>
+      </div>
+    `;
+    container.appendChild(div);
+    setTimeout(() => div.style.opacity = '1', 10);
+
+
+    const t = trend.type || 'No type';
+    typeCounts[t] = (typeCounts[t] || 0) + 1;
+
+    currentIndex++;
+    liveFeedHeader.textContent = `Live Feed (${currentIndex})`;
+    updateTopTypes();
+
+    if (!userScrolled) {
+      container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+    }
+
+    const randomDelay = batchInterval + (Math.random() * 3000 - 500);
+    setTimeout(addNextTrend, Math.max(100, randomDelay));
+  }
+
+  addNextTrend();
+}
+
+function updateTopTypes() {
+  const typesCountDiv = document.getElementById('types-count');
+  typesCountDiv.innerHTML = '';
+  const sorted = Object.entries(typeCounts)
+    .filter(([type, count]) => count > 0)
+    .sort((a, b) => b[1] - a[1]);
+  sorted.forEach(([type, count]) => {
+    const p = document.createElement('p');
+    p.className = 'type-label';
+    p.innerHTML = `<span>${type}</span><span class="count">${count}</span>`;
+    typesCountDiv.appendChild(p);
+  });
+}
+</script>
 </body>
-
 </html>
